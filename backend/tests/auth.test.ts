@@ -10,7 +10,9 @@ describe('Authentication API & User Models', () => {
   const app = createApp();
 
   beforeAll(async () => {
-    mongoServer = await MongoMemoryServer.create();
+    mongoServer = await MongoMemoryServer.create({
+      binary: { version: '7.0.14' }
+    });
     const uri = mongoServer.getUri();
     await mongoose.connect(uri);
   });
