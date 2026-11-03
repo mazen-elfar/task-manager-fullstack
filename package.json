@@ -1,0 +1,32 @@
+{
+  "name": "task-manager-fullstack",
+  "version": "1.0.0",
+  "description": "Production-ready Full-Stack Task Manager application with Express, TypeScript, MongoDB, React, Vite, and Tailwind CSS",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=backend & npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces",
+    "build:backend": "npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "npm run test --workspace=backend",
+    "test:frontend": "npm run test --workspace=frontend"
+  },
+  "keywords": [
+    "task-manager",
+    "react",
+    "typescript",
+    "express",
+    "mongodb",
+    "tailwind",
+    "full-stack"
+  ],
+  "author": "Mazen Elfar <mazenalfar01@gmail.com>",
+  "license": "MIT"
+}
