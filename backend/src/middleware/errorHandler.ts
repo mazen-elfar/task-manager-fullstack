@@ -34,7 +34,7 @@ export const errorHandler = (
     res.status(err.statusCode).json({
       success: false,
       error: {
-        code: err.constructor.name.toUpperCase().replace('ERROR', '_ERROR'),
+        code: err.code,
         message: err.message,
         details: err.details
       }
