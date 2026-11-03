@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import { env } from './config/env.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
+import authRoutes from './routes/authRoutes.js';
 
 export const createApp = (): Application => {
   const app: Application = express();
@@ -88,7 +89,10 @@ export const createApp = (): Application => {
     });
   });
 
-  // 8. 404 & Centralized Error Handlers (routes will be mounted in next commits)
+  // 8. API Routes
+  app.use('/api/v1/auth', authRoutes);
+
+  // 9. 404 & Centralized Error Handlers
   // Catch 404 for undefined routes
   app.use(notFoundHandler);
 
