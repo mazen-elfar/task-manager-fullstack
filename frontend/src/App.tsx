@@ -6,21 +6,8 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicRoute } from './routes/PublicRoute';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { DashboardPage } from './pages/DashboardPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { AppLayout } from './components/layout/AppLayout';
-import { useAuth } from './features/auth/useAuth';
-
-const DashboardPlaceholder: React.FC = () => {
-  const { user, logout } = useAuth();
-  return (
-    <AppLayout userName={user?.name} userEmail={user?.email} onLogout={logout}>
-      <div className="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm text-center">
-        <h2 className="text-xl font-bold text-slate-900">Welcome, {user?.name}!</h2>
-        <p className="text-slate-500 mt-1">Authentication is fully integrated.</p>
-      </div>
-    </AppLayout>
-  );
-};
 
 export const App: React.FC = () => {
   return (
@@ -49,7 +36,7 @@ export const App: React.FC = () => {
               path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <DashboardPlaceholder />
+                  <DashboardPage />
                 </ProtectedRoute>
               }
             />
