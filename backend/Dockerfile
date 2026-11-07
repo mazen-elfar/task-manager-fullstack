@@ -27,6 +27,8 @@ RUN npm install --omit=dev --workspace=backend
 
 COPY --from=builder /app/backend/dist ./backend/dist
 
+USER node
+
 EXPOSE 5000
 
 CMD ["node", "backend/dist/server.js"]

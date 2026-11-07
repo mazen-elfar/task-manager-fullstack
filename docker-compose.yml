@@ -9,6 +9,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - taskmanager-network
 
@@ -19,16 +25,17 @@ services:
     container_name: taskmanager-backend
     restart: always
     environment:
-      - PORT=5000
+      - PORT=${PORT:-5000}
       - NODE_ENV=production
-      - MONGODB_URI=mongodb://mongodb:27017/taskmanager
-      - JWT_SECRET=production_super_secret_jwt_key_64_characters_long_min
-      - JWT_EXPIRES_IN=7d
-      - CLIENT_URL=http://localhost:3000
+      - MONGODB_URI=${MONGODB_URI:-mongodb://mongodb:27017/taskmanager}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-7d}
+      - CLIENT_URL=${CLIENT_URL:-http://localhost:3000}
     ports:
       - "5000:5000"
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     networks:
       - taskmanager-network
 
