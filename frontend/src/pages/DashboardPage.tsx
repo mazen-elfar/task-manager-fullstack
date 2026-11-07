@@ -212,7 +212,7 @@ export const DashboardPage: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={loadTasks}
+              onClick={() => loadTasks()}
               className="mt-4"
               leftIcon={<RefreshCw className="w-4 h-4" />}
             >
