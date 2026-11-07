@@ -15,8 +15,8 @@ vi.mock('../../services/authService', () => ({
   }
 }));
 
-const renderRegisterPage = () => {
-  return render(
+const renderRegisterPage = async () => {
+  const view = render(
     <ToastProvider>
       <AuthProvider>
         <BrowserRouter>
@@ -25,11 +25,18 @@ const renderRegisterPage = () => {
       </AuthProvider>
     </ToastProvider>
   );
+
+  // Await session verification in AuthProvider to settle without act() warnings
+  await waitFor(() => {
+    expect(authService.getCurrentUser).toHaveBeenCalled();
+  });
+
+  return view;
 };
 
 describe('RegisterPage Component', () => {
-  it('renders all required registration input fields', () => {
-    renderRegisterPage();
+  it('renders all required registration input fields', async () => {
+    await renderRegisterPage();
 
     expect(screen.getByLabelText(/Full Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
@@ -39,7 +46,7 @@ describe('RegisterPage Component', () => {
   });
 
   it('rejects passwords that do not match confirmation', async () => {
-    renderRegisterPage();
+    await renderRegisterPage();
 
     await userEvent.type(screen.getByLabelText(/Full Name/i), 'Alice Doe');
     await userEvent.type(screen.getByLabelText(/Email Address/i), 'alice@example.com');
@@ -59,7 +66,7 @@ describe('RegisterPage Component', () => {
       message: 'An account with this email address already exists'
     });
 
-    renderRegisterPage();
+    await renderRegisterPage();
 
     await userEvent.type(screen.getByLabelText(/Full Name/i), 'Alice Duplicate');
     await userEvent.type(screen.getByLabelText(/Email Address/i), 'existing@example.com');

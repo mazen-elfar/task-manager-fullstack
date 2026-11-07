@@ -15,8 +15,8 @@ vi.mock('../../services/authService', () => ({
   }
 }));
 
-const renderLoginPage = () => {
-  return render(
+const renderLoginPage = async () => {
+  const view = render(
     <ToastProvider>
       <AuthProvider>
         <BrowserRouter>
@@ -25,11 +25,18 @@ const renderLoginPage = () => {
       </AuthProvider>
     </ToastProvider>
   );
+
+  // Await session verification in AuthProvider to settle without act() warnings
+  await waitFor(() => {
+    expect(authService.getCurrentUser).toHaveBeenCalled();
+  });
+
+  return view;
 };
 
 describe('LoginPage Component', () => {
-  it('renders login form with inputs and sign in button', () => {
-    renderLoginPage();
+  it('renders login form with inputs and sign in button', async () => {
+    await renderLoginPage();
 
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
@@ -37,7 +44,7 @@ describe('LoginPage Component', () => {
   });
 
   it('validates required email and password fields on submit', async () => {
-    renderLoginPage();
+    await renderLoginPage();
     const submitBtn = screen.getByRole('button', { name: /Sign In/i });
 
     await userEvent.click(submitBtn);
@@ -62,7 +69,7 @@ describe('LoginPage Component', () => {
       token: 'jwt-token-123'
     });
 
-    renderLoginPage();
+    await renderLoginPage();
 
     await userEvent.type(screen.getByLabelText(/Email Address/i), 'test@example.com');
     await userEvent.type(screen.getByLabelText(/Password/i), 'password123');
@@ -82,7 +89,7 @@ describe('LoginPage Component', () => {
       message: 'Invalid email or password'
     });
 
-    renderLoginPage();
+    await renderLoginPage();
 
     await userEvent.type(screen.getByLabelText(/Email Address/i), 'bad@example.com');
     await userEvent.type(screen.getByLabelText(/Password/i), 'wrongpass');
