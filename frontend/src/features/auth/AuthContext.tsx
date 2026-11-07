@@ -40,8 +40,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     verifySession();
 
+    const handleUnauthorized = () => {
+      if (isMounted) {
+        setUser(null);
+      }
+    };
+
+    window.addEventListener('auth:unauthorized', handleUnauthorized);
+
     return () => {
       isMounted = false;
+      window.removeEventListener('auth:unauthorized', handleUnauthorized);
     };
   }, []);
 

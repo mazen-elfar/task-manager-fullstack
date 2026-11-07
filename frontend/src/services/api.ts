@@ -23,15 +23,15 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor to format error responses consistently
+// Response interceptor to format error responses consistently and purge stale tokens on 401
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError<{ success: boolean; error: ApiError }>) => {
     if (error.response?.status === 401) {
-      // If unauthorized on a protected route, remove local token
-      const isAuthCheck = error.config?.url?.includes('/auth/me');
-      if (!isAuthCheck) {
-        localStorage.removeItem('token');
+      // Whenever authentication is rejected, immediately remove token from storage
+      localStorage.removeItem('token');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('auth:unauthorized'));
       }
     }
 
