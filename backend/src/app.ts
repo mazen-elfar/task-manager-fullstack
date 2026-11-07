@@ -24,13 +24,16 @@ export const createApp = (): Application => {
     })
   );
 
-  // 3. CORS Configuration
-  const allowedOrigins = [
-    env.CLIENT_URL,
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173'
-  ];
+  // 3. CORS Configuration: strictly restricted to CLIENT_URL in production, permissive for local development
+  const allowedOrigins =
+    env.NODE_ENV === 'production'
+      ? [env.CLIENT_URL].filter(Boolean)
+      : [
+          env.CLIENT_URL,
+          'http://localhost:5173',
+          'http://localhost:3000',
+          'http://127.0.0.1:5173'
+        ].filter(Boolean);
 
   app.use(
     cors({
