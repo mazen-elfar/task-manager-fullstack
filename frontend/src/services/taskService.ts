@@ -9,9 +9,10 @@ import {
 } from '../types/task';
 
 export const taskService = {
-  async getTasks(params?: TaskQueryParams): Promise<TaskListResponse> {
+  async getTasks(params?: TaskQueryParams, signal?: AbortSignal): Promise<TaskListResponse> {
     const response = await apiClient.get<TaskListResponse>('/tasks', {
-      params
+      params,
+      signal
     });
     return response.data;
   },

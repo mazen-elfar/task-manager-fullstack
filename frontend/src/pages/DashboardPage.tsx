@@ -13,6 +13,7 @@ import { Card } from '../components/common/Card';
 import { taskService } from '../services/taskService';
 import { Task, TaskPriority, TaskStatus, CreateTaskPayload } from '../types/task';
 import { AlertCircle, RefreshCw } from 'lucide-react';
+import axios from 'axios';
 
 export const DashboardPage: React.FC = () => {
   const { user, logout } = useAuth();
@@ -24,8 +25,18 @@ export const DashboardPage: React.FC = () => {
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearch, setDebouncedSearch] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<'all' | TaskStatus>('all');
   const [priorityFilter, setPriorityFilter] = useState<'all' | TaskPriority>('all');
+
+  // Debounce search input by 300ms to eliminate network thrashing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   // Modal dialog states
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
@@ -37,19 +48,22 @@ export const DashboardPage: React.FC = () => {
 
   const [updatingTaskId, setUpdatingTaskId] = useState<string | null>(null);
 
-  // Fetch tasks from API
-  const loadTasks = useCallback(async () => {
+  // Fetch tasks from API with race condition and debounce protection
+  const loadTasks = useCallback(async (signal?: AbortSignal) => {
     setIsLoading(true);
     setFetchError(null);
     try {
       const data = await taskService.getTasks({
-        search: searchQuery || undefined,
+        search: debouncedSearch || undefined,
         status: statusFilter,
         priority: priorityFilter,
         limit: 100
-      });
+      }, signal);
       setTasks(data.tasks);
     } catch (err: unknown) {
+      if (axios.isCancel(err)) {
+        return; // Stale request aborted; do not overwrite state
+      }
       const msg = err && typeof err === 'object' && 'message' in err
         ? String((err as { message: string }).message)
         : 'Failed to load tasks. Please check your connection.';
@@ -57,10 +71,14 @@ export const DashboardPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [searchQuery, statusFilter, priorityFilter]);
+  }, [debouncedSearch, statusFilter, priorityFilter]);
 
   useEffect(() => {
-    loadTasks();
+    const controller = new AbortController();
+    loadTasks(controller.signal);
+    return () => {
+      controller.abort();
+    };
   }, [loadTasks]);
 
   // Compute Task Statistics
@@ -137,6 +155,7 @@ export const DashboardPage: React.FC = () => {
 
   const handleResetFilters = () => {
     setSearchQuery('');
+    setDebouncedSearch('');
     setStatusFilter('all');
     setPriorityFilter('all');
   };
