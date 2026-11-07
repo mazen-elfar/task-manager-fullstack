@@ -1,0 +1,43 @@
+name: TaskMaster CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    name: Test & Build (Monorepo)
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+      JWT_SECRET: ci_test_super_secret_jwt_key_at_least_32_characters_long
+      MONGODB_URI: mongodb://localhost:27017/taskmanager_ci
+      CLIENT_URL: http://localhost:5173
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Backend Integration & Unit Tests
+        run: npm run test:backend
+
+      - name: Run Frontend Component & Unit Tests
+        run: npm run test:frontend
+
+      - name: Compile Backend TypeScript
+        run: npm run build:backend
+
+      - name: Build Frontend Production Bundle
+        run: npm run build:frontend
