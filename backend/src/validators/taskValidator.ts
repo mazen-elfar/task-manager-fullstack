@@ -54,7 +54,7 @@ export const updateTaskSchema = z.object({
 });
 
 export const taskQuerySchema = z.object({
-  search: z.string().trim().optional(),
+  search: z.string().trim().max(100, 'Search query cannot exceed 100 characters').optional(),
   status: z.enum(['all', 'pending', 'completed']).optional().default('all'),
   priority: z.enum(['all', 'low', 'medium', 'high']).optional().default('all'),
   page: z.coerce.number().int().positive().optional().default(1),

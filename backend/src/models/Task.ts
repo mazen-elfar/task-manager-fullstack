@@ -74,8 +74,20 @@ const taskSchema = new Schema<ITaskDocument>(
   }
 );
 
-// Compound indexes for user-scoped filtering, searching and ordering
-taskSchema.index({ userId: 1, status: 1 });
+// Compound indexes tailored for user-scoped query patterns, sorting, and filtering
+// 1. User + status + newest first (primary dashboard view)
+taskSchema.index({ userId: 1, status: 1, createdAt: -1 });
+
+// 2. User + priority + newest first (priority filtered view)
+taskSchema.index({ userId: 1, priority: 1, createdAt: -1 });
+
+// 3. User + dueDate (due date ascending sort without in-memory sort buffer overflow)
+taskSchema.index({ userId: 1, dueDate: 1 });
+
+// 4. User + default chronological sort
 taskSchema.index({ userId: 1, createdAt: -1 });
+
+// 5. Full-text search index on title and description
+taskSchema.index({ title: 'text', description: 'text' });
 
 export const Task: ITaskModel = mongoose.model<ITaskDocument, ITaskModel>('Task', taskSchema);
