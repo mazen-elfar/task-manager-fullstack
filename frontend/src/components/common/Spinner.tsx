@@ -18,8 +18,8 @@ export const Spinner: React.FC<SpinnerProps> = ({ size = 'md', className, label 
 
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-2" role="status">
-      <Loader2 className={cn('animate-spin text-indigo-600', sizes[size], className)} />
-      {label && <span className="text-sm font-medium text-slate-500">{label}</span>}
+      <Loader2 className={cn('animate-spin text-cyan-400', sizes[size], className)} />
+      {label && <span className="text-sm font-medium text-slate-300">{label}</span>}
       <span className="sr-only">Loading...</span>
     </div>
   );

@@ -14,50 +14,50 @@ export const TaskStats: React.FC<TaskStatsProps> = ({ total, pending, completed 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       {/* Total Tasks */}
-      <Card className="p-4 flex items-center gap-3.5">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100">
+      <Card hoverable className="p-4 flex items-center gap-3.5 group">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 shadow-[0_0_15px_rgba(56,189,248,0.15)] group-hover:scale-105 transition-transform">
           <CheckSquare className="w-5 h-5" />
         </div>
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Tasks</div>
-          <div className="text-2xl font-bold text-slate-900 mt-0.5">{total}</div>
+          <div className="text-2xl font-extrabold text-white mt-0.5 tracking-tight">{total}</div>
         </div>
       </Card>
 
       {/* Pending Tasks */}
-      <Card className="p-4 flex items-center gap-3.5">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
+      <Card hoverable className="p-4 flex items-center gap-3.5 group">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/25 shadow-[0_0_15px_rgba(245,158,11,0.15)] group-hover:scale-105 transition-transform">
           <Clock className="w-5 h-5" />
         </div>
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Pending</div>
-          <div className="text-2xl font-bold text-slate-900 mt-0.5">{pending}</div>
+          <div className="text-2xl font-extrabold text-white mt-0.5 tracking-tight">{pending}</div>
         </div>
       </Card>
 
       {/* Completed Tasks */}
-      <Card className="p-4 flex items-center gap-3.5">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+      <Card hoverable className="p-4 flex items-center gap-3.5 group">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:scale-105 transition-transform">
           <CheckCircle2 className="w-5 h-5" />
         </div>
         <div>
           <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Completed</div>
-          <div className="text-2xl font-bold text-slate-900 mt-0.5">{completed}</div>
+          <div className="text-2xl font-extrabold text-white mt-0.5 tracking-tight">{completed}</div>
         </div>
       </Card>
 
       {/* Completion Rate */}
-      <Card className="p-4 flex flex-col justify-between">
+      <Card hoverable className="p-4 flex flex-col justify-between group">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Progress</span>
-          <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
             <TrendingUp className="w-3.5 h-3.5" />
             <span>{completionRate}%</span>
           </div>
         </div>
-        <div className="mt-2 w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+        <div className="mt-3 w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden border border-white/5">
           <div
-            className="bg-emerald-500 h-full rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-cyan-400 to-emerald-400 h-full rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
             style={{ width: `${completionRate}%` }}
           />
         </div>

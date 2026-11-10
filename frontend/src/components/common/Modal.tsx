@@ -59,7 +59,7 @@ export const Modal: React.FC<ModalProps> = ({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity animate-fadeIn"
+        className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity animate-fadeIn"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -68,21 +68,20 @@ export const Modal: React.FC<ModalProps> = ({
       <div
         ref={modalRef}
         className={cn(
-          'relative w-full rounded-2xl bg-white shadow-2xl border border-slate-100 p-6 z-10 transition-all transform animate-scaleUp',
+          'relative w-full rounded-3xl bg-slate-900/95 backdrop-blur-2xl shadow-2xl border border-white/15 p-6 z-10 transition-all text-slate-100 animate-fadeIn',
           maxWidths[maxWidth]
         )}
       >
-        <div className="flex items-start justify-between pb-3 border-b border-slate-100">
+        <div className="flex items-start justify-between pb-3 border-b border-white/10">
           <div>
-            <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
+            <h2 id="modal-title" className="text-lg font-bold text-white tracking-tight">
               {title}
             </h2>
-            {description && <p className="text-sm text-slate-500 mt-0.5">{description}</p>}
+            {description && <p className="text-xs text-slate-400 mt-1">{description}</p>}
           </div>
           <button
             onClick={onClose}
-            type="button"
-            className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="p-1.5 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -91,7 +90,11 @@ export const Modal: React.FC<ModalProps> = ({
 
         <div className="py-4">{children}</div>
 
-        {footer && <div className="pt-3 border-t border-slate-100 flex justify-end gap-3">{footer}</div>}
+        {footer && (
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

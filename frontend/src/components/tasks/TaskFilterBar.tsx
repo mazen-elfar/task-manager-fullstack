@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, Plus, Filter } from 'lucide-react';
+import { Search, X, Plus, Filter, RotateCcw } from 'lucide-react';
 import { Button } from '../common/Button';
 import { TaskPriority, TaskStatus } from '../../types/task';
 import { cn } from '@/lib/utils';
@@ -40,12 +40,12 @@ export const TaskFilterBar: React.FC<TaskFilterBarProps> = ({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search tasks by title or details..."
-            className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-9 py-2 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 shadow-sm"
+            className="w-full rounded-xl border border-white/15 bg-slate-900/70 backdrop-blur-xl pl-10 pr-9 py-2.5 text-sm text-slate-100 transition-all placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 shadow-inner"
           />
           {searchQuery && (
             <button
               onClick={() => onSearchChange('')}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white"
               aria-label="Clear search"
             >
               <X className="w-4 h-4" />
@@ -66,19 +66,19 @@ export const TaskFilterBar: React.FC<TaskFilterBarProps> = ({
 
       {/* Filter Row */}
       <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Status Tabs */}
-          <div className="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200/60">
+          <div className="inline-flex rounded-xl bg-slate-900/80 backdrop-blur-sm p-1 border border-white/10 shadow-sm">
             {(['all', 'pending', 'completed'] as const).map((status) => (
               <button
                 key={status}
                 type="button"
                 onClick={() => onStatusChange(status)}
                 className={cn(
-                  'px-3 py-1 text-xs font-semibold rounded-md transition-all select-none',
+                  'px-3.5 py-1 text-xs font-semibold rounded-lg transition-all select-none',
                   statusFilter === status
-                    ? 'bg-white text-indigo-700 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/20'
+                    : 'text-slate-400 hover:text-white'
                 )}
               >
                 {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -87,31 +87,32 @@ export const TaskFilterBar: React.FC<TaskFilterBarProps> = ({
           </div>
 
           {/* Priority Dropdown */}
-          <div className="inline-flex items-center gap-1.5 bg-white border border-slate-200/80 rounded-lg px-2.5 py-1 text-xs shadow-sm">
+          <div className="inline-flex items-center gap-1.5 bg-slate-900/80 backdrop-blur-sm border border-white/10 rounded-xl px-3 py-1.5 text-xs shadow-sm">
             <Filter className="w-3.5 h-3.5 text-slate-400" />
             <select
               value={priorityFilter}
               onChange={(e) => onPriorityChange(e.target.value as 'all' | TaskPriority)}
-              className="bg-transparent text-slate-700 font-medium focus:outline-none cursor-pointer"
+              className="bg-transparent text-slate-200 font-medium focus:outline-none cursor-pointer"
             >
-              <option value="all">All Priorities</option>
-              <option value="low">Low Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="high">High Priority</option>
+              <option value="all" className="bg-slate-900 text-slate-100">All Priorities</option>
+              <option value="low" className="bg-slate-900 text-slate-100">Low Priority</option>
+              <option value="medium" className="bg-slate-900 text-slate-100">Medium Priority</option>
+              <option value="high" className="bg-slate-900 text-slate-100">High Priority</option>
             </select>
           </div>
-
-          {/* Clear Filters Button */}
-          {isFiltered && (
-            <button
-              onClick={onResetFilters}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800 px-2 py-1 transition-colors"
-            >
-              <X className="w-3.5 h-3.5" />
-              Reset
-            </button>
-          )}
         </div>
+
+        {/* Reset Filters Option if filters are active */}
+        {isFiltered && (
+          <button
+            type="button"
+            onClick={onResetFilters}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-cyan-400 transition-colors"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Filters</span>
+          </button>
+        )}
       </div>
     </div>
   );

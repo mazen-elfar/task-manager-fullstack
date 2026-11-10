@@ -28,14 +28,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col relative z-10">
       <Navbar
         onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         userName={userName}
         userEmail={userEmail}
         onLogout={onLogout}
       />
-      <div className="flex flex-1 w-full max-w-7xl mx-auto">
+      <div className="flex flex-1 w-full max-w-7xl mx-auto relative">
         <Sidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}

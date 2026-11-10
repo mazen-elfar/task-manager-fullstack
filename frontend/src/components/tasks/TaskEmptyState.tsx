@@ -16,13 +16,13 @@ export const TaskEmptyState: React.FC<TaskEmptyStateProps> = ({
 }) => {
   if (isFiltering) {
     return (
-      <Card className="p-12 text-center flex flex-col items-center justify-center">
-        <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center mb-4">
-          <SearchX className="w-7 h-7" />
+      <Card className="p-12 text-center flex flex-col items-center justify-center border-dashed border-white/15">
+        <div className="w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+          <SearchX className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-bold text-slate-900">No matching tasks found</h3>
-        <p className="text-sm text-slate-500 max-w-sm mt-1 mb-5">
-          No tasks match your current search and filter criteria. Try adjusting keywords or resetting filters.
+        <h3 className="text-xl font-bold text-white tracking-tight">No matching tasks found</h3>
+        <p className="text-sm text-slate-400 max-w-md mt-1.5 mb-6 leading-relaxed">
+          No tasks match your current search and filter criteria. Try adjusting your search query or reset active filters.
         </p>
         {onClearFilters && (
           <Button
@@ -39,13 +39,13 @@ export const TaskEmptyState: React.FC<TaskEmptyStateProps> = ({
   }
 
   return (
-    <Card className="p-12 text-center flex flex-col items-center justify-center">
-      <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mb-4">
-        <ClipboardList className="w-7 h-7" />
+    <Card className="p-12 text-center flex flex-col items-center justify-center border-dashed border-white/15">
+      <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(56,189,248,0.25)]">
+        <ClipboardList className="w-8 h-8" />
       </div>
-      <h3 className="text-lg font-bold text-slate-900">No tasks created yet</h3>
-      <p className="text-sm text-slate-500 max-w-sm mt-1 mb-5">
-        Organize your work, set priorities, and track your progress all in one place.
+      <h3 className="text-xl font-bold text-white tracking-tight">No tasks created yet</h3>
+      <p className="text-sm text-slate-400 max-w-md mt-1.5 mb-6 leading-relaxed">
+        Your workspace is clear and ready. Organize your deliverables, configure priorities, and interact with live particle dynamics.
       </p>
       {onCreateTask && (
         <Button

@@ -108,68 +108,68 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
         />
 
         <div className="space-y-1.5">
-          <label htmlFor="task-description" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="task-description" className="block text-sm font-medium text-slate-200">
             Description
           </label>
           <textarea
             id="task-description"
             rows={3}
             placeholder="Add any relevant details, sub-tasks, or notes..."
-            className="block w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-900 transition-colors placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 resize-y"
+            className="block w-full rounded-xl border border-white/15 bg-slate-950/60 backdrop-blur-sm px-3.5 py-2.5 text-sm text-slate-100 transition-all placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 resize-y"
             {...register('description')}
           />
           {errors.description && (
-            <p className="text-xs text-red-600 font-medium">{errors.description.message}</p>
+            <p className="text-xs text-rose-400 font-medium">{errors.description.message}</p>
           )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Priority */}
           <div className="space-y-1.5">
-            <label htmlFor="task-priority" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="task-priority" className="block text-sm font-medium text-slate-200">
               Priority
             </label>
             <select
               id="task-priority"
-              className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="block w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 cursor-pointer"
               {...register('priority')}
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="low" className="bg-slate-900 text-slate-100">Low</option>
+              <option value="medium" className="bg-slate-900 text-slate-100">Medium</option>
+              <option value="high" className="bg-slate-900 text-slate-100">High</option>
             </select>
           </div>
 
           {/* Status */}
           <div className="space-y-1.5">
-            <label htmlFor="task-status" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="task-status" className="block text-sm font-medium text-slate-200">
               Status
             </label>
             <select
               id="task-status"
-              className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="block w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 cursor-pointer"
               {...register('status')}
             >
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
+              <option value="pending" className="bg-slate-900 text-slate-100">Pending</option>
+              <option value="completed" className="bg-slate-900 text-slate-100">Completed</option>
             </select>
           </div>
 
           {/* Due Date */}
           <div className="space-y-1.5">
-            <label htmlFor="task-due-date" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="task-due-date" className="block text-sm font-medium text-slate-200">
               Due Date
             </label>
             <input
               id="task-due-date"
               type="date"
-              className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="block w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-sm text-slate-100 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 cursor-pointer [color-scheme:dark]"
               {...register('dueDate')}
             />
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

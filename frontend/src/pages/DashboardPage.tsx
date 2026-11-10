@@ -12,7 +12,7 @@ import { Button } from '../components/common/Button';
 import { Card } from '../components/common/Card';
 import { taskService } from '../services/taskService';
 import { Task, TaskPriority, TaskStatus, CreateTaskPayload } from '../types/task';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
 import axios from 'axios';
 
 export const DashboardPage: React.FC = () => {
@@ -171,15 +171,19 @@ export const DashboardPage: React.FC = () => {
       activeFilter={statusFilter}
       onSelectFilter={(f) => setStatusFilter(f)}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto pb-12">
         {/* Welcome Header */}
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-              Task Workspace
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+              <span>Task Workspace</span>
+              <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-300">
+                <Sparkles className="w-3 h-3" />
+                Live Constellation
+              </span>
             </h1>
-            <p className="text-sm text-slate-500 mt-0.5">
-              Manage, organize, and prioritize your daily deliverables.
+            <p className="text-sm text-slate-400 mt-1">
+              Manage, organize, and prioritize your daily deliverables with interactive reactive dynamics.
             </p>
           </div>
         </div>
@@ -205,10 +209,10 @@ export const DashboardPage: React.FC = () => {
 
         {/* Content Area */}
         {fetchError ? (
-          <Card className="p-8 text-center flex flex-col items-center justify-center border-red-200 bg-red-50/50">
-            <AlertCircle className="w-8 h-8 text-red-600 mb-2" />
-            <h3 className="text-base font-bold text-red-900">Failed to load tasks</h3>
-            <p className="text-sm text-red-700 mt-1 max-w-md">{fetchError}</p>
+          <Card className="p-8 text-center flex flex-col items-center justify-center border-rose-500/30 bg-rose-500/10">
+            <AlertCircle className="w-8 h-8 text-rose-400 mb-2" />
+            <h3 className="text-base font-bold text-white">Failed to load tasks</h3>
+            <p className="text-sm text-rose-300 mt-1 max-w-md">{fetchError}</p>
             <Button
               variant="outline"
               size="sm"
@@ -224,7 +228,7 @@ export const DashboardPage: React.FC = () => {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-36 rounded-xl bg-slate-200/60 animate-pulse border border-slate-200"
+                className="h-36 rounded-2xl bg-slate-900/40 backdrop-blur-sm animate-pulse border border-white/5"
               />
             ))}
           </div>

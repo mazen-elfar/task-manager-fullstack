@@ -39,9 +39,18 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     [removeToast]
   );
 
-  const success = useCallback((message: string, title?: string) => addToast({ type: 'success', title, message }), [addToast]);
-  const error = useCallback((message: string, title?: string) => addToast({ type: 'error', title, message }), [addToast]);
-  const info = useCallback((message: string, title?: string) => addToast({ type: 'info', title, message }), [addToast]);
+  const success = useCallback(
+    (message: string, title?: string) => addToast({ type: 'success', title, message }),
+    [addToast]
+  );
+  const error = useCallback(
+    (message: string, title?: string) => addToast({ type: 'error', title, message }),
+    [addToast]
+  );
+  const info = useCallback(
+    (message: string, title?: string) => addToast({ type: 'info', title, message }),
+    [addToast]
+  );
 
   return (
     <ToastContext.Provider value={{ toast: addToast, success, error, info }}>
@@ -49,34 +58,34 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0">
         {toasts.map((t) => {
           const icons = {
-            success: <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />,
-            error: <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />,
-            info: <Info className="w-5 h-5 text-sky-600 shrink-0" />
+            success: <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />,
+            error: <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />,
+            info: <Info className="w-5 h-5 text-cyan-400 shrink-0" />
           };
 
           const borders = {
-            success: 'border-emerald-200 bg-emerald-50/90 text-emerald-950',
-            error: 'border-rose-200 bg-rose-50/90 text-rose-950',
-            info: 'border-sky-200 bg-sky-50/90 text-sky-950'
+            success: 'border-emerald-500/40 bg-slate-900/95 text-emerald-100 shadow-[0_0_25px_rgba(16,185,129,0.2)]',
+            error: 'border-rose-500/40 bg-slate-900/95 text-rose-100 shadow-[0_0_25px_rgba(244,63,94,0.2)]',
+            info: 'border-cyan-500/40 bg-slate-900/95 text-cyan-100 shadow-[0_0_25px_rgba(6,182,212,0.2)]'
           };
 
           return (
             <div
               key={t.id}
               className={cn(
-                'pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-lg backdrop-blur transition-all duration-200 animate-slideInRight',
+                'pointer-events-auto flex items-start gap-3 p-4 rounded-2xl border backdrop-blur-xl transition-all duration-200 animate-fadeIn',
                 borders[t.type]
               )}
               role="alert"
             >
               {icons[t.type]}
               <div className="flex-1 text-sm">
-                {t.title && <div className="font-semibold">{t.title}</div>}
-                <div className="mt-0.5 opacity-90">{t.message}</div>
+                {t.title && <div className="font-semibold text-white">{t.title}</div>}
+                <div className="mt-0.5 opacity-90 text-slate-200">{t.message}</div>
               </div>
               <button
                 onClick={() => removeToast(t.id)}
-                className="text-slate-400 hover:text-slate-600 p-0.5 rounded transition-colors"
+                className="text-slate-400 hover:text-white p-0.5 rounded transition-colors"
                 aria-label="Dismiss toast"
               >
                 <X className="w-4 h-4" />

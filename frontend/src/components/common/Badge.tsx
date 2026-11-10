@@ -14,12 +14,17 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    pending: 'bg-amber-50 text-amber-700 border-amber-200 ring-amber-600/20',
-    completed: 'bg-emerald-50 text-emerald-700 border-emerald-200 ring-emerald-600/20',
-    low: 'bg-sky-50 text-sky-700 border-sky-200 ring-sky-600/20',
-    medium: 'bg-indigo-50 text-indigo-700 border-indigo-200 ring-indigo-600/20',
-    high: 'bg-rose-50 text-rose-700 border-rose-200 ring-rose-600/20',
-    neutral: 'bg-slate-100 text-slate-700 border-slate-200 ring-slate-600/10'
+    pending:
+      'bg-amber-500/15 text-amber-300 border-amber-500/30 ring-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.12)]',
+    completed:
+      'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 ring-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.12)]',
+    low:
+      'bg-sky-500/15 text-sky-300 border-sky-500/30 ring-sky-500/20 shadow-[0_0_10px_rgba(56,189,248,0.12)]',
+    medium:
+      'bg-indigo-500/15 text-indigo-300 border-indigo-500/30 ring-indigo-500/20 shadow-[0_0_10px_rgba(99,102,241,0.12)]',
+    high:
+      'bg-rose-500/15 text-rose-300 border-rose-500/30 ring-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.12)]',
+    neutral: 'bg-slate-800/80 text-slate-300 border-slate-700/80 ring-slate-700/20'
   };
 
   const sizes = {
@@ -30,7 +35,7 @@ export const Badge: React.FC<BadgeProps> = ({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border ring-1 font-medium select-none',
+        'inline-flex items-center gap-1.5 rounded-full border ring-1 font-medium select-none backdrop-blur-sm',
         variants[variant],
         sizes[size],
         className
@@ -39,12 +44,12 @@ export const Badge: React.FC<BadgeProps> = ({
     >
       <span
         className={cn(
-          'w-1.5 h-1.5 rounded-full',
-          variant === 'pending' && 'bg-amber-500',
-          variant === 'completed' && 'bg-emerald-500',
-          variant === 'low' && 'bg-sky-500',
-          variant === 'medium' && 'bg-indigo-500',
-          variant === 'high' && 'bg-rose-500',
+          'w-1.5 h-1.5 rounded-full shadow-sm',
+          variant === 'pending' && 'bg-amber-400 animate-pulse',
+          variant === 'completed' && 'bg-emerald-400',
+          variant === 'low' && 'bg-sky-400',
+          variant === 'medium' && 'bg-indigo-400',
+          variant === 'high' && 'bg-rose-400 animate-pulse',
           variant === 'neutral' && 'bg-slate-400'
         )}
       />
