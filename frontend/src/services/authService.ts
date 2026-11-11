@@ -1,5 +1,5 @@
 import { apiClient } from './api';
-import { AuthResponse, User } from '../types/auth';
+import { ApiError, AuthResponse, User } from '../types/auth';
 
 export interface RegisterPayload {
   name: string;
@@ -37,8 +37,17 @@ export const authService = {
     }
   },
 
-  async getCurrentUser(): Promise<User> {
-    const response = await apiClient.get<{ success: boolean; user: User }>('/auth/me');
-    return response.data.user;
+  async getCurrentUser(): Promise<User | null> {
+    try {
+      const response = await apiClient.get<{ success: boolean; user: User }>('/auth/me');
+      return response.data.user;
+    } catch (err) {
+      const apiError = err as ApiError;
+      if (apiError?.status === 401 || apiError?.code === 'UNAUTHORIZED_ERROR') {
+        // Expected unauthenticated state during startup or expired session recovery
+        return null;
+      }
+      throw err;
+    }
   }
 };

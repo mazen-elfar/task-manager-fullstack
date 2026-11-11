@@ -55,34 +55,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = useCallback(async (credentials: LoginPayload) => {
-    setIsLoading(true);
     try {
       const response = await authService.login(credentials);
       setUser(response.user);
     } catch (err) {
       setUser(null);
       throw err as ApiError;
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 
   const register = useCallback(async (credentials: RegisterPayload) => {
-    setIsLoading(true);
     try {
       const response = await authService.register(credentials);
       setUser(response.user);
     } catch (err) {
       setUser(null);
       throw err as ApiError;
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 
   const logout = useCallback(async () => {
     try {
       await authService.logout();
+    } catch {
+      // Unexpected server/network errors are already logged safely by apiClient;
+      // complete local session teardown without throwing an unhandled rejection.
     } finally {
       setUser(null);
     }
